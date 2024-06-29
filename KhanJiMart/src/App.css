@@ -2,13 +2,39 @@
 @tailwind components;
 @tailwind utilities;
 
-
 *{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   scroll-behavior: smooth;
-  width: 100%;
-  height: 100vh; 
+}
 
+
+/* All Colour Using In Website */
+:root{
+  --mainPrimaryColorWhite: #FFFFFF;
+  --mainPrimaryColorBalticSea:  #363738;
+  --mainSecondaryLightWhite: #F5F5F5;
+  --mainSecondary1LightWhite: #FEFAF1;
+  --mainBackgroundColorWhite: #FFFFFF;
+  --mainTextWhiteColor: #FAFAFA;
+  --mainTextGrey:#7D8184;
+  --mainTextBlack: #000000;
+  --mainButtonBlack: #000000;
+  --mainSecondaryRedish: #DB4444;
+  --mainButtonGreenish: #00FF66;
+  --mainButtonRedish: #DB4444;
+  --mainHoverButton: #E07575;
+  --mainHoverButtonSkyidh: #A0BCE0;
+  --mainTransparentType: #d6d6d6;
+}
+
+
+html{
+  width: 100%;
+  height: 100vh;
+}
+
+body{
+  background-color: var(--mainBackgroundColorWhite);
 }
