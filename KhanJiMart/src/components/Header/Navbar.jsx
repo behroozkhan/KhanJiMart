@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Logo from "./Logo";
 import NavRight from "./NavRight";
 import { Button } from "@mui/material";
+import PersistentDrawerLeft from "./Drawyer";
 
 
 const navbarItems = [
@@ -17,13 +18,17 @@ const navbarItems = [
 
 const Navbar = () => {
   return (
-    <nav className="flex items-center justify-evenly border-b-2">
-      <div>
+    <nav className="flex items-center justify-between sm:justify-between md:justify-evenly border-b-2">
+     <div className="block lg:hidden xl:hidden md:hidden">
+        <PersistentDrawerLeft/>
+      </div>
+      <div >
         <Link to={"/"}>
           <Logo />
         </Link>
       </div>
-      <div className="">
+
+      <div className="hidden md:hidden lg:flex xl:flex">
         {navbarItems.map((items) => (
           <ul className="flex gap-2 ml-8">
             {items.items.map((link) => (
