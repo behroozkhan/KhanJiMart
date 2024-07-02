@@ -28,7 +28,7 @@ const NavRight = () => {
             <img src={WishList} alt="wishlist" width={33} className="mr-4" />
           </Link>
         </div>
-        <Link to={"#"}>
+        <Link to={"/cart"}>
        
           <img src={CartIcon} alt="cart" width={33} />
         </Link>
