@@ -2,6 +2,7 @@ import { Button } from '@mui/material';
 import React from 'react'
 import WishlistCard from './WishlistCard';
 import GucchiBag from "../../assets/images/Gucchibag.png";
+import OldWishlist from './RelatedListAccourdingtoUserRecord';
 
 const Wishlist = () => {
   return (
@@ -20,6 +21,9 @@ const Wishlist = () => {
             <WishlistCard/>
         </div>
 
+        <div>
+          <OldWishlist/>
+        </div>
         
     </div>
   )

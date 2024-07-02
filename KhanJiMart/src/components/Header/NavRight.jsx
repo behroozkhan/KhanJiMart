@@ -24,16 +24,15 @@ const NavRight = () => {
             4
           </span>
           <Link to={"/wishlist"}>
-            {" "}
+            
             <img src={WishList} alt="wishlist" width={33} className="mr-4" />
           </Link>
         </div>
         <Link to={"#"}>
-          {" "}
+       
           <img src={CartIcon} alt="cart" width={33} />
         </Link>
         <Link to={"#"}>
-          {" "}
           <img
             src={ProfileIcon}
             alt="user-profile"
