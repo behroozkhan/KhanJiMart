@@ -1,15 +1,10 @@
 import React from "react";
-import Header from "../components/Header/Header";
 import { Button } from "@mui/material";
 import LoginImg from "../assets/images/LoginSignupSideImg.png";
 import GoogleIcon from "../assets/images/Icon-Google.svg";
 const Register = () => {
   return (
     <div>
-      <div>
-        <Header />
-      </div>
-
       <div className="flex flex-wrap items-center mt-6">
         <div className="mt-4 bg-red-400 flex flex-wrap">
           <img
