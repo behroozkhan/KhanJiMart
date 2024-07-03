@@ -17,6 +17,7 @@ const CartBottom = () => {
               backgroundColor: "var(--mainSecondaryRedish)",
               color: "white",
             },
+            display: { xs: "none", sm: "flex" },
           }}
         >
           Move All To Bag
@@ -33,6 +34,7 @@ const CartBottom = () => {
               backgroundColor: "var(--mainSecondaryRedish)",
               color: "white",
             },
+            display: { xs: "none", sm: "flex" },
           }}
         >
           Return To Shop
@@ -41,12 +43,12 @@ const CartBottom = () => {
 
       {/* Coupon Code Cart Total */}
 
-      <div className="flex justify-between mt-10">
-        <div className="w-[45%] b">
-          <input
-            // style={{ border: "1px solid var(--mainGrey)" }}
-            className="w-[270px] p-[10px] rounded  outline-none"
-            style={{border:"1px solid var(--mainTextGrey)",}}
+      <div className="flex flex-col md:flex-row justify-between mt-10">
+        <div className="sm:flex-row w-full justify-between xl:w-[45%] lg:w-[45%] md:w-[45%] items-center">
+        <div className="flex justify-between max-w-[90%]">
+        <input
+            className="md:min-w-[270px] sm:w-[auto] md:w-[150px] lg:w-[200px] pl-4 rounded outline-none"
+            style={{ border: "1px solid var(--mainTextGrey)" }}
             type="text"
             placeholder="Coupon Code"
           />
@@ -54,25 +56,23 @@ const CartBottom = () => {
             sx={{
               alignItems: "center",
               color: "var(--mainPrimaryColorWhite)",
-              font: "1.200rem",
+              fontSize: { xs: "10px", sm: "12px", md: "14px", lg: "16px" },
               border: "1px solid var(--mainTextGrey)",
-              width: "200px",
-              padding: "10px",
-              marginLeft: "1rem",
-              outline:'none',
-              
+              padding: { xs: "5px", sm: "10px", md: "10px", lg: "12px" },
+              width: { xs: "100%", sm: "auto" },
               background: "var(--mainSecondaryRedish)",
               "&:hover": {
                 backgroundColor: "var(--mainSecondaryLightWhite)",
                 color: "var(--mainTextBlack)",
               },
-            } }
+            }}
           >
             Apply Coupon
           </Button>
         </div>
+        </div>
 
-        <div className=" border w-[40%] p-6 rounded border-black">
+        <div className="border w-full xl:w-[40%] lg:w-[40%] md:w-[40%] p-6 rounded border-black xl:mt-0 lg:mt-0 md:mt-0 mt-10">
           <h2 className="text-[1.200rem] font-semibold">Cart Total</h2>
           <div className="flex justify-between mt-4 border-b-2 pb-2">
             <h4>Subtotal:</h4>
@@ -97,8 +97,8 @@ const CartBottom = () => {
                 backgroundColor: "var(--mainSecondaryRedish)",
                 padding: "15px",
                 "&:hover": {
-                    backgroundColor: "var(--mainSecondaryLightWhite)",
-                    color: "var(--mainTextBlack)",
+                  backgroundColor: "var(--mainSecondaryLightWhite)",
+                  color: "var(--mainTextBlack)",
                 },
               }}
             >

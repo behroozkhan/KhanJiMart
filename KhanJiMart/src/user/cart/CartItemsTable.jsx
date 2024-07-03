@@ -11,30 +11,26 @@ import { CartList } from '../../Product/product';
 
 const CartItemsTable = () => {
   return (
-    <TableContainer sx={{width: '78%',margin:'auto',marginTop:'3rem'}}>
-      <Table >
-        <TableHead >
-          <TableRow >
-            <TableCell sx={{width: '20%'}}>Product</TableCell>
-            <TableCell align="right">Price</TableCell>
-            <TableCell align="right">Quanitity</TableCell>
-            <TableCell align="right">Subtotal</TableCell>
+    <TableContainer sx={{ width: '78%', margin: 'auto', marginTop: '3rem' }}>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell sx={{ width: '20%' }}>Product</TableCell>
+            <TableCell align="right" sx={{ display: { xs: 'none', sm: 'table-cell' } }}>Price</TableCell>
+            <TableCell align="right">Quantity</TableCell>
+            <TableCell align="right" sx={{ display: { xs: 'none', sm: 'table-cell' } }}>Subtotal</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {CartList.map((row) => (
-            <TableRow
-              key={row.name}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row" sx={{display:'flex', alignItems:'center', gap:'1rem'}}>
-                    <img className='w-[50px]' src={row.img} alt="" 
-                    />
-                    <span>{row.text}</span>
+            <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+              <TableCell component="th" scope="row" sx={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                <img className="w-[50px]" src={row.img} alt="" />
+                <span>{row.text}</span>
               </TableCell>
-              <TableCell align="right">{row.priceActual}</TableCell>
+              <TableCell align="right" sx={{ display: { xs: 'none', sm: 'table-cell' } }}>{row.priceActual}</TableCell>
               <TableCell align="right">{row.quantity}</TableCell>
-              <TableCell align="right">{row.subTotal}</TableCell>
+              <TableCell align="right" sx={{ display: { xs: 'none', sm: 'table-cell' } }}>{row.subTotal}</TableCell>
             </TableRow>
           ))}
         </TableBody>
