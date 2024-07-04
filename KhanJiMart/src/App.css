@@ -39,3 +39,9 @@ html {
 body {
   background-color: var(--mainBackgroundColorWhite);
 }
+
+
+/* quantity placeholder  */
+.placeholder-custom::placeholder {
+  color: var(--mainTextBlack);
+}
