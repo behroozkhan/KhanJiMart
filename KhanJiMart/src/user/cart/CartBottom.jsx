@@ -1,5 +1,6 @@
 import { Button } from "@mui/material";
 import React from "react";
+import { Link } from "react-router-dom";
 
 const CartBottom = () => {
   return (
@@ -102,7 +103,7 @@ const CartBottom = () => {
                 },
               }}
             >
-              Procees to checkout
+              <Link to={'/checkout'}>Procees to checkout</Link>
             </Button>
           </div>
         </div>
