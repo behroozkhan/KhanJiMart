@@ -7,12 +7,13 @@ const Register = lazy(() => import("../pages/Register"));
 const Wishlist = lazy(() => import("../user/wishlist/Wishlist"));
 const Cart = lazy(() => import("../user/cart/Cart"));
 const Checkout = lazy(() => import("../user/checkout/Checkout"));
+const Account = lazy(() => import("../user/account/Account"));
 
 const Router = () => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <BrowserRouter>
-      <div>
+        <div>
           <Header />
         </div>
         <Routes>
@@ -21,6 +22,7 @@ const Router = () => {
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/profile" element={<Account />} />
 
           {/* Auth Routes */}
           <Route path="/login" element={<Login />} />
