@@ -52,13 +52,51 @@ const PaymentCheckoutBillingRightSide = () => {
         <h3>Bank</h3>
       </div>
 
-    <div className="mt-6">
-        <input type="text" placeholder="Coupon Code" />
-        <Button>Apply Coupon</Button>
-    </div>
+      <div className="mt-6 flex  justify-between">
+        <input
+          className="md:min-w-[230px] md:min-h-[35px]  md:w-[150px] lg:w-[200px] sm:w-[auto]  pl-4 p-1   rounded outline-none"
+          style={{ border: "1px solid var(--mainTextGrey)" }}
+          type="text"
+          placeholder="Coupon Code"
+        />
+        {/* <Button
+          sx={{
+            alignItems: "center",
+            color: "var(--mainPrimaryColorWhite)",
+            padding: "10px 20px",
+            padding: {sm: "0px 0px"},
+            border: "1px solid var(--mainTextGrey)",
+            background: "var(--mainSecondaryRedish)",
+            "&:hover": {
+              backgroundColor: "var(--mainSecondaryLightWhite)",
+              color: "var(--mainTextBlack)",
+            },
+          }}
+        >
+          Apply Coupon
+        </Button> */}
+        <button className="bg-[var(--mainSecondaryRedish)] text-[12px] md:w-[150px] rounded text-[var(--mainPrimaryColorWhite)] sm:w-full text-center  sm:p-1 p-2 font-normal hover:bg-[var(--mainSecondaryLightWhite)] border hover:text-[var(--mainTextBlack)]">
+          Apply Coupon
+        </button>
+      </div>
 
-    <Button sx={{marginTop:'25px'}}><Link>Place Order</Link></Button>
-
+      <Button
+        sx={{
+          marginTop: "20px",
+          width: "200px",
+          alignItems: "center",
+          color: "var(--mainPrimaryColorWhite)",
+          padding: "10px 20px",
+          border: "1px solid var(--mainTextGrey)",
+          background: "var(--mainSecondaryRedish)",
+          "&:hover": {
+            backgroundColor: "var(--mainSecondaryLightWhite)",
+            color: "var(--mainTextBlack)",
+          },
+        }}
+      >
+        <Link>Place Order</Link>
+      </Button>
     </div>
   );
 };
