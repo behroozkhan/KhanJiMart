@@ -20,13 +20,13 @@ const MyAccountLink = () => {
 
         <div className="mt-3">
           <h2 className=" font-medium text-[1rem] p-1">My Orders</h2>
-          <Link className="text-[var(--maingrey2)] font-medium">
+          <Link className="text-[var(--maingrey2)] font-normal">
             <li className=" ml-6 mt-2">My Profile</li>
           </Link>
-          <Link className="text-[var(--maingrey2)] font-medium">
+          <Link className="text-[var(--maingrey2)] font-normal">
             <li className=" ml-6">Addresss Book</li>
           </Link>
-          <Link className="text-[var(--maingrey2)] font-medium">
+          <Link className="text-[var(--maingrey2)] font-normal">
             <li className=" ml-6">My Payments Options</li>
           </Link>
         </div>

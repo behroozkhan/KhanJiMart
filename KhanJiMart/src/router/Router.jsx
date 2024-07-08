@@ -1,13 +1,16 @@
 import { lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "../components/Header/Header";
+// import Cart from "../pages/Cart";
+// import Checkout from "../pages/Checkout";
+// import Account from "../pages/Account";
 const Home = lazy(() => import("../pages/Home"));
 const Login = lazy(() => import("../pages/Login"));
 const Register = lazy(() => import("../pages/Register"));
-const Wishlist = lazy(() => import("../user/wishlist/Wishlist"));
-const Cart = lazy(() => import("../user/cart/Cart"));
-const Checkout = lazy(() => import("../user/checkout/Checkout"));
-const Account = lazy(() => import("../user/account/Account"));
+const Wishlist = lazy(() => import("../pages/Wishlist"));
+const Cart = lazy(() => import("../pages/Cart"));
+const Checkout = lazy(() => import("../pages/Checkout"));
+const Account = lazy(() => import("../pages/Account"));
 
 const Router = () => {
   return (
