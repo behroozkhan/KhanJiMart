@@ -11,7 +11,7 @@ const navbarItems = [
       { name: "Home", id: "home" },
       { name: "Contact", id: "contact" },
       { name: "About", id: "about" },
-      { name: "Sign Up", id: "sign up" },
+      { name: "Sign Up", id: "register  " },
     ],
   },
 ];
