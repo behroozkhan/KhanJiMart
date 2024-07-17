@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const AccountTopLink = () => {
+  // const [user, setUser] = useState(
+  //   JSON.parse(localStorage.getItem("userData"))
+  // );
+
+
+
   return (
     <div>
       <div className="mt-10 flex justify-between">
@@ -14,7 +20,8 @@ const AccountTopLink = () => {
 
         <div className="flex gap-1">
             <h3>Welcome!</h3>
-            <h4>Behrooz Khan</h4>
+            {/* <h4>{user?.message?.user?.name}</h4> */}
+            <h4>behrooz Khan</h4>
         </div>
 
       </div>

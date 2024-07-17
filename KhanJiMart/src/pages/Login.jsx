@@ -2,16 +2,13 @@ import React, { useEffect } from "react";
 import { Button, Typography } from "@mui/material";
 import LoginImg from "../assets/images/LoginSignupSideImg.png";
 import { useFormik } from "formik";
-import { LoginSchema } from "../schemas/AuthValidations.js";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { login } from "../redux/redux-features/auth/AuthSlice.js";
-import { ImSpinner9 } from "react-icons/im";
-import LoadingButtonMui from "../utils/button/LoadingButton.jsx";
-import LoadingButton from "@mui/lab/LoadingButton";
+import { login } from "../redux/redux-features/auth/AuthSlice";
+import {LoadingButtonMui} from "../utils/button/LoadingButton";
 
 const initialValues = {
-  username: "",
+  email: "",
   password: "",
 };
 
@@ -24,22 +21,20 @@ const Login = () => {
 
   useEffect(() => {
     if (userData) {
-      navigate("/cart");
+      navigate("/");
     }
   }, [userData, navigate]);
 
   const formik = useFormik({
     initialValues,
-    validationSchema: LoginSchema,
     onSubmit: async (values, { setSubmitting }) => {
       const params = {
-        username: values.username,
+        email: values.email,
         password: values.password,
       };
       try {
-        const resultAction = await dispatch(login(params)).unwrap();
-
-        console.log("Login successful:", resultAction);
+         dispatch(login(params));
+         console.log('values-->',values);
       } catch (err) {
         console.error("Failed to login:", err.message);
       } finally {
@@ -76,19 +71,19 @@ const Login = () => {
                   <input
                     style={{ borderBottom: "1px solid var(--mainTextGrey)" }}
                     className="w-full outline-none border-none pb-2"
-                    type="text"
+                    type="email"
                     placeholder="Email or phone number"
                     autoComplete="off"
-                    name="username"
-                    value={formik.values.username}
+                    name="email"
+                    value={formik.values.email}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     size="lg"
                     required
                   />
-                  {formik.errors.username && formik.touched.username && (
+                  {formik.errors.email && formik.touched.email && (
                     <Typography color="error" variant="body2">
-                      {formik.errors.username}
+                      {formik.errors.email}
                     </Typography>
                   )}
                 </div>

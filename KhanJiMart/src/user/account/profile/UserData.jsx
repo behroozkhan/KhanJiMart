@@ -1,7 +1,35 @@
 import { Button } from "@mui/material";
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { AuthApi } from "../../../api/AuthApi";
+import { useNavigate } from "react-router-dom";
 
 const UserData = () => {
+
+  // const [user, setUser] = useState(
+  //   JSON.parse(localStorage.getItem("userData"))
+  // );
+
+  const navigate = useNavigate()
+
+  // console.log("user -->",user.message.user);
+
+  // const {name,email,} = user.data
+
+
+  const userData = async()=>{
+    try {
+      const response = await axios.get('http://localhost:8000/api/v1/users/current-user');
+      console.log("response-->",response);
+    } catch (error) {
+      console.log('error',error);
+    }
+  }
+
+  useEffect(()=>{
+    userData()
+  },[])
+
   return (
     <div className="w-[65%] mt-20 mx-auto">
       <h2 className="ml-10 text-[var(--mainSecondaryRedish)] text-[1.300rem] font-semibold mb-6">
@@ -17,6 +45,8 @@ const UserData = () => {
           <input
             type="text"
             className="pl-4 bg-[var(--mainSecondaryLightWhite)] p-2 mt-3 outline-none appearance-none text-[var(--mainTextBlack)] w-[320px]"
+            // value={user.message.user.name}
+            disabled
           />
         </div>
 
@@ -37,6 +67,8 @@ const UserData = () => {
           <input
             type="text"
             className="pl-4 bg-[var(--mainSecondaryLightWhite)] p-2 mt-2 outline-none appearance-none text-[var(--mainTextBlack)] w-[320px]"
+            // value={user.message.user.email}
+            disabled
           />
         </div>
 
