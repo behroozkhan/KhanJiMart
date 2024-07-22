@@ -8,7 +8,10 @@ const Wishlist = lazy(() => import("../pages/Wishlist"));
 const Cart = lazy(() => import("../pages/Cart"));
 const Checkout = lazy(() => import("../pages/Checkout"));
 const Account = lazy(() => import("../pages/Account"));
-const About  = lazy(()=> import("../pages/About"))
+const About  = lazy(()=> import("../pages/About"));
+const ForgotPassword  = lazy(()=> import("../pages/ForgotPassword"));
+
+
 const Router = () => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
@@ -28,6 +31,8 @@ const Router = () => {
           {/* Auth Routes */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          
         </Routes>
       </BrowserRouter>
     </Suspense>
