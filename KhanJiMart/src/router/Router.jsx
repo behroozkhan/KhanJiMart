@@ -10,6 +10,7 @@ const Checkout = lazy(() => import("../pages/Checkout"));
 const Account = lazy(() => import("../pages/Account"));
 const About  = lazy(()=> import("../pages/About"));
 const ForgotPassword  = lazy(()=> import("../pages/ForgotPassword"));
+const NewPassword  = lazy(()=> import("../pages/NewPassword"));
 
 
 const Router = () => {
@@ -27,6 +28,7 @@ const Router = () => {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/profile" element={<Account />} />
           <Route path="/about" element={<About />} />
+          <Route path="/new-password" element={<NewPassword />} />
 
           {/* Auth Routes */}
           <Route path="/login" element={<Login />} />
