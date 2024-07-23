@@ -3,9 +3,9 @@ import { Button, Typography } from "@mui/material";
 import LoginImg from "../assets/images/LoginSignupSideImg.png";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { login } from "../redux/redux-features/auth/AuthSlice";
-import {LoadingButtonMui} from "../utils/button/LoadingButton";
+import { LoadingButtonMui } from "../utils/button/LoadingButton";
 
 const initialValues = {
   email: "",
@@ -33,8 +33,8 @@ const Login = () => {
         password: values.password,
       };
       try {
-         dispatch(login(params));
-         console.log('values-->',values);
+        dispatch(login(params));
+        console.log("values-->", values);
       } catch (err) {
         console.error("Failed to login:", err.message);
       } finally {
@@ -110,10 +110,12 @@ const Login = () => {
               </div>
               <div className="flex items-center justify-between mt-4">
                 <LoadingButtonMui loading={isLoading || formik.isSubmitting} />
-
-                <span className="text-[var(--mainSecondaryRedish)]">
+                <Link
+                  className="text-[var(--mainSecondaryRedish)]"
+                  to={"/forgot-password"}
+                >
                   Forgot Password?
-                </span>
+                </Link>
               </div>
               {isError && (
                 <Typography
