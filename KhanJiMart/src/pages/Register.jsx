@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import LoginImg from "../assets/images/LoginSignupSideImg.png";
 import GoogleIcon from "../assets/images/Icon-Google.svg";
 import { useFormik } from "formik";
@@ -7,32 +7,36 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RegisterLoadingButtonMui } from "../utils/button/LoadingButton";
 import { register } from "../redux/redux-features/auth/AuthSlice";
-
-
+import { RegisterSchema } from "../schemas/AuthValidations";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const initialValues = {
-  name:"",
+  name: "",
   email: "",
   password: "",
 };
 
-
 const Register = () => {
-
   const dispatch = useDispatch();
-  const { userData, isLoading, isError, errorMessage } = useSelector(
+  const { isLoading, isError, isSuccess, errorMessage } = useSelector(
     (state) => state.auth
   );
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (userData) {
-      navigate("/");
+    if (isSuccess) {
+      toast.success("You have successfully registered.");
+      navigate("/login");
     }
-  }, [userData, navigate]);
+    if (isError) {
+      toast.error(errorMessage || "Registration failed.");
+    }
+  }, [isSuccess, isError, errorMessage, navigate]);
 
   const formik = useFormik({
     initialValues,
+    validationSchema: RegisterSchema,
     onSubmit: async (values, { setSubmitting }) => {
       const params = {
         name: values.name,
@@ -40,8 +44,9 @@ const Register = () => {
         password: values.password,
       };
       try {
-         dispatch(register(params));
-         console.log('values-->',values);
+        console.log("pararmsRegister", params);
+        await dispatch(register(params)).unwrap();
+        console.log("values-->", values);
       } catch (err) {
         console.error("Failed to login:", err.message);
       } finally {
@@ -50,9 +55,9 @@ const Register = () => {
     },
   });
 
-
   return (
     <div>
+      <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} />
       <div className="flex flex-wrap items-center mt-6">
         <div className="mt-4 bg-red-400 flex flex-wrap">
           <img
@@ -87,10 +92,14 @@ const Register = () => {
                   required
                 />
                 {formik.errors.name && formik.touched.name && (
-                    <Typography color="error" variant="body2">
-                      {formik.errors.name}
-                    </Typography>
-                  )}
+                  <Typography
+                    sx={{ marginTop: "0.200rem" }}
+                    color="error"
+                    variant="body2"
+                  >
+                    {formik.errors.name}*
+                  </Typography>
+                )}
               </div>
               <div className="">
                 <input
@@ -105,10 +114,14 @@ const Register = () => {
                   required
                 />
                 {formik.errors.email && formik.touched.email && (
-                    <Typography color="error" variant="body2">
-                      {formik.errors.email}
-                    </Typography>
-                  )}
+                  <Typography
+                    sx={{ marginTop: "0.200rem" }}
+                    color="error"
+                    variant="body2"
+                  >
+                    {formik.errors.email}*
+                  </Typography>
+                )}
               </div>
               <div>
                 <input
@@ -122,15 +135,19 @@ const Register = () => {
                   onBlur={formik.handleBlur}
                   required
                 />
-                 {formik.errors.password && formik.touched.password && (
-                    <Typography color="error" variant="body2">
-                      {formik.errors.password}
-                    </Typography>
-                  )}
+                {formik.errors.password && formik.touched.password && (
+                  <Typography
+                    sx={{ marginTop: "0.200rem" }}
+                    color="error"
+                    variant="body2"
+                  >
+                    {formik.errors.password}*
+                  </Typography>
+                )}
               </div>
             </div>
 
-            <div  className="space-y-6">
+            <div className="space-y-6">
               <div className="">
                 <RegisterLoadingButtonMui
                   sx={{
