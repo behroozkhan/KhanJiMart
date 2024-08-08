@@ -28,12 +28,12 @@ const Router = () => {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/profile" element={<Account />} />
           <Route path="/about" element={<About />} />
-          <Route path="/new-password" element={<NewPassword />} />
 
           {/* Auth Routes */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/new-password/:userId" element={<NewPassword />} />
           
         </Routes>
       </BrowserRouter>
