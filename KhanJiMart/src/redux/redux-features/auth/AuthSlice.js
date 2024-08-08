@@ -250,12 +250,10 @@ const authSlice = createSlice({
         state.isError = false;
         state.errorMessage = "";
         state.isSuccess = false;
-        state.successMessage = "";
       })
       .addCase(checkingUserMailOrPhoneExist.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.successMessage = action.payload.message;
         state.userId = action.payload.data?._id;
       })
       .addCase(checkingUserMailOrPhoneExist.rejected, (state, action) => {

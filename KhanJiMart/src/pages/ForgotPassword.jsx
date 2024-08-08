@@ -121,7 +121,7 @@ const ForgotPassword = () => {
               </Button>
               {isLoading && <p>Loading...</p>}
               {isError && <p style={{ color: "red" }}>{errorMessage}</p>}
-              {isSuccess && <p style={{ color: "green" }}>{successMessage}</p>}
+              {/* {isSuccess && <p style={{ color: "green" }}>{successMessage}</p>} */}
 
               <Link to={"/login"}>
                 <div className="w-[350px] flex items-center justify-center mt-6 space-x-2">
