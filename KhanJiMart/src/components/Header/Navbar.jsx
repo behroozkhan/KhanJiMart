@@ -5,6 +5,7 @@ import { Button } from "@mui/material";
 import PersistentDrawerLeft from "./Drawyer";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/redux-features/auth/AuthSlice";
+import Swal from 'sweetalert2'
 
 const navbarItems = [
   {
@@ -23,12 +24,18 @@ const Navbar = () => {
   // const { userData } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { userData } = useSelector((state) => state.auth);
+  const { token } = useSelector((state) => state.auth);
 
   const handleLogout =  () => {
     try {
-      dispatch(logout());
+      
       console.log("Logout successful!");
+      Swal.fire({
+        title: "Success",
+        text: "logout successful",
+        icon: "success",
+      });
+      dispatch(logout());
       navigate("/login");
     } catch (error) {
       console.error("Logout error:", error.message);
@@ -63,7 +70,7 @@ const Navbar = () => {
                 </li>
               ))}
 
-              {userData ? (
+              {token ? (
                 <li>
                   <Link to="/login">
                     <Button
