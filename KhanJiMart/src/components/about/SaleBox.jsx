@@ -37,7 +37,7 @@ const SaleBox = () => {
     {SalesCont.map((item) => (
       <div
         key={item.id}
-        className="border w-[250px] h-[200px] flex flex-col justify-center items-center group hover:bg-[var(--mainSecondaryRedish)] transition duration-300 ease-in-out"
+        className="border-2 rounded shadow-lg w-[250px] h-[200px] flex flex-col justify-center items-center group hover:bg-[var(--mainSecondaryRedish)] transition duration-300 ease-in-out"
       >
         <div className="bg-slate-400 rounded-full p-3 group-hover:bg-[var(--mainHoverButton)] transition duration-300 ease-in-out">
           <img
