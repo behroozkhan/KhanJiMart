@@ -3,6 +3,7 @@
   import AboutHeroLeft from "./AboutHeroLeft";
   import AboutHeroRightImg from "./AboutHeroRightImg";
 import SaleBox from "./SaleBox";
+import TestemonilasCraousels from "./TestemonilasCraousels";
 
   const AboutCont = () => {
     return (
@@ -23,6 +24,10 @@ import SaleBox from "./SaleBox";
 
       <div>
         <SaleBox />
+      </div>
+
+      <div>
+        <TestemonilasCraousels/>
       </div>
       </div>
     );
