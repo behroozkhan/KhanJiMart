@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Typography } from "@mui/material";
 import LoginImg from "../assets/images/LoginSignupSideImg.png";
 import { useFormik } from "formik";
@@ -6,6 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../redux/redux-features/auth/AuthSlice";
 import { LoadingButtonMui } from "../utils/button/LoadingButton";
+import { LoginSchema } from "../schemas/AuthValidations";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const initialValues = {
   email: "",
@@ -14,27 +18,42 @@ const initialValues = {
 
 const Login = () => {
   const dispatch = useDispatch();
-  const { userData, isLoading, isError, errorMessage } = useSelector(
+  const { token, isLoading, isError,isSuccess, errorMessage } = useSelector(
     (state) => state.auth
   );
   const navigate = useNavigate();
+console.log("token22",token);
+// console.log('isSuccess-->',isSuccess);
+
+
+  // useEffect(() => {
+  //   if (token) {
+  //     navigate("/");
+  //   }
+  // }, [token, navigate]);
 
   useEffect(() => {
-    if (userData) {
-      navigate("/");
+    if (token) {
+      toast.success('You have successfully logged in.');
+        navigate("/");
     }
-  }, [userData, navigate]);
+    if (isError) {
+      toast.error(errorMessage || "Login failed.");
+    }
+  }, [isSuccess,token, navigate]);
 
   const formik = useFormik({
     initialValues,
-    onSubmit: async (values, { setSubmitting }) => {
+    validationSchema: LoginSchema,
+    onSubmit: async (values,{ setSubmitting }) => {
       const params = {
         email: values.email,
         password: values.password,
       };
       try {
-        dispatch(login(params));
+        
         console.log("values-->", values);
+        dispatch(login(params));
       } catch (err) {
         console.error("Failed to login:", err.message);
       } finally {
@@ -45,6 +64,9 @@ const Login = () => {
 
   return (
     <div>
+       <div className=" absolute right-10 w-[25%] animate-popup">
+            <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} />
+       </div>
       <div className="flex flex-wrap items-center mt-6">
         <div className="mt-4 bg-red-400 flex flex-wrap">
           <img
