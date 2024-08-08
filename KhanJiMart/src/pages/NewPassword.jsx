@@ -1,15 +1,45 @@
-import React, { useEffect } from "react";
-import { Button, Typography } from "@mui/material";
+import React from "react";
+import { Button } from "@mui/material";
 import LoginImg from "../assets/images/LoginSignupSideImg.png";
-import { Link, useNavigate } from "react-router-dom";
-import { login } from "../redux/redux-features/auth/AuthSlice";
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useFormik } from "formik";
+import { forgettenResetPassword } from "../redux/redux-features/auth/AuthSlice";
 
 const initialValues = {
-  email: "",
   password: "",
+  confirmPassword: "",
 };
 
 const NewPassword = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { userId } = useParams();
+
+  const { isLoading, isError, errorMessage, isSuccess, successMessage } =
+    useSelector((state) => state.auth);
+
+  const formik = useFormik({
+    initialValues,
+    onSubmit: async (values, { setSubmitting }) => {
+      const params = {
+        userId,
+        password: values.password,
+        confirmPassword: values.confirmPassword,
+      };
+      try {
+        console.log("params-->", params);
+        await dispatch(forgettenResetPassword(params)).unwrap();
+        console.log("values-->", values);
+        navigate("/login");
+      } catch (error) {
+        console.log("Reset password Failed:", error);
+      } finally {
+        setSubmitting(false);
+      }
+    },
+  });
+
   return (
     <div>
       <div className="flex flex-wrap items-center mt-6">
@@ -27,50 +57,53 @@ const NewPassword = () => {
               Change Password
             </h2>
 
-            <form>
+            <form onSubmit={formik.handleSubmit}>
               <div className="space-y-8 mb-4 mt-8 ">
+                <div className="">
+                  <input
+                    className="pl-4 bg-[var(--mainSecondaryLightWhite)] p-2 outline-none appearance-none text-[var(--mainTextBlack)] w-[350px]"
+                    type="password"
+                    placeholder="password"
+                    autoComplete="off"
+                    name="password"
+                    size="lg"
+                    value={formik.values.password}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    required
+                  />
+                </div>
+
                 <div className="">
                   <input
                     className="pl-4 bg-[var(--mainSecondaryLightWhite)] p-2 outline-none appearance-none text-[var(--mainTextBlack)] w-[350px]"
                     type="password"
                     placeholder="New password"
                     autoComplete="off"
-                    name="password"
+                    name="confirmPassword"
                     size="lg"
-                    required
-                  />
-                </div>
-                <div>
-                  <input
-                    className="pl-4 bg-[var(--mainSecondaryLightWhite)] p-2 outline-none appearance-none text-[var(--mainTextBlack)] w-[350px]"
-                    type="password"
-                    placeholder="confirm-password"
-                    autoComplete="off"
-                    name="password"
-                    size="lg"
+                    value={formik.values.confirmPassword}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
                     required
                   />
                 </div>
               </div>
               <div className="flex items-center justify-between mt-10">
-                <Link
-                  className="text-[var(--mainSecondaryRedish)]"
-                  to={"/login"}
+                <Button
+                  sx={{
+                    background: "var(--mainButtonRedish)",
+                    width: "350px",
+                    color: "var(--mainBackgroundColorWhite)",
+                    "&:hover": {
+                      backgroundColor: "var(--mainSecondaryLightWhite)",
+                      color: "var(--mainTextBlack)",
+                    },
+                  }}
+                  type="submit"
                 >
-                  <Button
-                    sx={{
-                      background: "var(--mainButtonRedish)",
-                      width: "350px",
-                      color: "var(--mainBackgroundColorWhite)",
-                      "&:hover": {
-                        backgroundColor: "var(--mainSecondaryLightWhite)",
-                        color: "var(--mainTextBlack)",
-                      },
-                    }}
-                  >
-                    Submit
-                  </Button>
-                </Link>
+                  Submit
+                </Button>
               </div>
             </form>
           </div>
@@ -81,3 +114,4 @@ const NewPassword = () => {
 };
 
 export default NewPassword;
+  
