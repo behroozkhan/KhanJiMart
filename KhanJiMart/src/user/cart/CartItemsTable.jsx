@@ -40,13 +40,18 @@ const CartItemsTable = () => {
               <TableCell
                 component="th"
                 scope="row"
-                sx={{ display: "flex", alignItems: "center", gap: "1rem",position: 'relative', }}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "1rem",
+                  position: "relative",
+                }}
               >
-               <span className="absolute top-[24%] p-1 rounded-full bg-red-500 text-white text-xs font-bold border-2 border-white flex items-center justify-center w-5 h-5">
-                  <RxCross2  />
+                <span className="absolute top-[24%] p-1 rounded-full bg-red-500 text-white text-xs font-bold border-2 border-white flex items-center justify-center w-5 h-5">
+                  <RxCross2 />
                 </span>
                 <img className="w-[70px]" src={row.img} alt="" />
-                <span >{row.text}</span>
+                <span>{row.text}</span>
               </TableCell>
               <TableCell
                 align="right"
