@@ -36,5 +36,22 @@ const LoginSchema = Yup.object().shape({
   });
 
 
+const phoneOrEmailVal = Yup.object().shape(
+  {
+    emailOrPhone: Yup.string()
+      .required("Email or phone number is required")
+      .test(
+        "is-email-or-phone",
+        "Please provide a valid email or phone number",
+        value => {
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          const phoneRegex = /^[0-9]{10,15}$/;
+          return emailRegex.test(value) || phoneRegex.test(value);
+        }
+      )
+  }
+); 
 
-  export  {LoginSchema,RegisterSchema};
+
+
+  export  {LoginSchema,RegisterSchema,phoneOrEmailVal,emailRegex};
