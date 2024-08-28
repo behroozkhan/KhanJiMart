@@ -3,18 +3,34 @@ import { Button, Typography } from "@mui/material";
 import LoginImg from "../assets/images/LoginSignupSideImg.png";
 import GoogleIcon from "../assets/images/Icon-Google.svg";
 import { useFormik } from "formik";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RegisterLoadingButtonMui } from "../utils/button/LoadingButton";
 import { register } from "../redux/redux-features/auth/AuthSlice";
-import { RegisterSchema } from "../schemas/AuthValidations";
+import { RegisterSchema, emailRegex } from "../schemas/AuthValidations";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const initialValues = {
   name: "",
-  email: "",
+  emailOrPhone: "",
   password: "",
+};
+
+// Function to handle form submission
+const handleSubmission = async (values, setSubmitting, dispatch) => {
+  const params = emailRegex.test(values.emailOrPhone)
+    ? { email: values.emailOrPhone }
+    : { phone: values.emailOrPhone };
+  try {
+    await dispatch(
+      register({ ...params, name: values.name, password: values.password })
+    ).unwrap();
+  } catch (error) {
+    console.error("Failed to login:", error.message);
+  } finally {
+    setSubmitting(false);
+  }
 };
 
 const Register = () => {
@@ -38,14 +54,8 @@ const Register = () => {
     initialValues,
     validationSchema: RegisterSchema,
     onSubmit: async (values, { setSubmitting }) => {
-      const params = {
-        name: values.name,
-        email: values.email,
-        password: values.password,
-      };
       try {
-        console.log("pararmsRegister", params);
-        await dispatch(register(params)).unwrap();
+        await handleSubmission(values, setSubmitting, dispatch);
         console.log("values-->", values);
       } catch (err) {
         console.error("Failed to login:", err.message);
@@ -57,7 +67,11 @@ const Register = () => {
 
   return (
     <div>
-      <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} />
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+      />
       <div className="flex flex-wrap items-center mt-6">
         <div className="mt-4 bg-red-400 flex flex-wrap">
           <img
@@ -105,21 +119,21 @@ const Register = () => {
                 <input
                   style={{ borderBottom: "1px solid var(--mainTextGrey)" }}
                   className="w-full outline-none border-none pb-2"
-                  type="email"
-                  name="email"
+                  type="emailOrPhone"
+                  name="emailOrPhone"
                   placeholder="Email or phone number"
-                  value={formik.values.email}
+                  value={formik.values.emailOrPhone}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   required
                 />
-                {formik.errors.email && formik.touched.email && (
+                {formik.errors.emailOrPhone && formik.touched.emailOrPhone && (
                   <Typography
                     sx={{ marginTop: "0.200rem" }}
                     color="error"
                     variant="body2"
                   >
-                    {formik.errors.email}*
+                    {formik.errors.emailOrPhone}*
                   </Typography>
                 )}
               </div>
@@ -177,8 +191,18 @@ const Register = () => {
                 </Button>
               </div>
             </div>
+          <div className="w-[300px] flex items-center mt-6 space-x-2">
+          <p className="text-[14px]">
+            Already have an account ? 
+            <Link className="text-blue-800 font-medium" to={"/login"}>
+              {" "}Sign In
+            </Link>
+          </p>
+        </div>
           </div>
         </form>
+      </div>
+      <div>
       </div>
     </div>
   );

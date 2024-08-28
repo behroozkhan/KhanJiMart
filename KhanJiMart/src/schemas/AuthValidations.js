@@ -5,7 +5,17 @@ const phoneRegex = /^\+\d{1,3}\d{9,12}$/;
 
 // Login Validation Schema
 const LoginSchema = Yup.object().shape({
-    email: Yup.string().matches(emailRegex, 'Invalid email format').email('Invalid email').required('Email Is Required'),
+  emailOrPhone: Yup.string()
+  .required("Email or phone number is required")
+  .test(
+    "is-email-or-phone",
+    "Please provide a valid email or phone number",
+    value => {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const phoneRegex = /^[0-9]{10,15}$/;
+      return emailRegex.test(value) || phoneRegex.test(value);
+    }
+  ),
     password: Yup.string()
     .min(8, 'Password must be at least 8 characters')
     .matches(
@@ -22,7 +32,17 @@ const LoginSchema = Yup.object().shape({
         .max(100)
         .required("Name Is Feild")
         ,
-    email: Yup.string().matches(emailRegex, 'Invalid email format').email('Invalid email').required('Email Is Required'),
+        emailOrPhone: Yup.string()
+        .required("Email or phone number is required")
+        .test(
+          "is-email-or-phone",
+          "Please provide a valid email or phone number",
+          value => {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const phoneRegex = /^[0-9]{10,15}$/;
+            return emailRegex.test(value) || phoneRegex.test(value);
+          }
+        ),
     password: Yup.string()
     .min(8, 'Password must be at least 8 characters')
     .matches(

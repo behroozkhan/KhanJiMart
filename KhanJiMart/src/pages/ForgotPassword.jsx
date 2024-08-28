@@ -11,7 +11,7 @@ import { phoneOrEmailVal,emailRegex } from "../schemas/AuthValidations";
 
 
 const initialValues = {
-  emailOrPhone: "", // Always set a default value
+  emailOrPhone: "", 
 };
 
 
