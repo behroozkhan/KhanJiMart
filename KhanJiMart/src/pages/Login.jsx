@@ -6,14 +6,31 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../redux/redux-features/auth/AuthSlice";
 import { LoadingButtonMui } from "../utils/button/LoadingButton";
-import { LoginSchema } from "../schemas/AuthValidations";
+import { LoginSchema,emailRegex } from "../schemas/AuthValidations";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { FaAngleLeft } from "react-icons/fa6";
 
 
 const initialValues = {
-  email: "",
+  emailOrPhone: "",
   password: "",
+};
+
+
+// Function to handle form submission
+const handleSubmission = async (values, setSubmitting, dispatch) => {
+  const params = emailRegex.test(values.emailOrPhone)
+    ? { email: values.emailOrPhone }
+    : { phone: values.emailOrPhone };
+
+  try {
+    await dispatch(login({ ...params, password: values.password })).unwrap();
+  } catch (error) {
+    console.error("Failed to login:", error.message);
+  } finally {
+    setSubmitting(false);
+  }
 };
 
 const Login = () => {
@@ -23,14 +40,6 @@ const Login = () => {
   );
   const navigate = useNavigate();
 console.log("token22",token);
-// console.log('isSuccess-->',isSuccess);
-
-
-  // useEffect(() => {
-  //   if (token) {
-  //     navigate("/");
-  //   }
-  // }, [token, navigate]);
 
   useEffect(() => {
     if (token) {
@@ -42,23 +51,52 @@ console.log("token22",token);
     }
   }, [isSuccess,token, navigate]);
 
+  // const formik = useFormik({
+  //   initialValues,
+  //   validationSchema: LoginSchema,
+  //   onSubmit: async (values,{ setSubmitting }) => {
+  //     const params = {
+  //       email: values.email,
+  //       password: values.password,
+  //     };
+  //     try {
+        
+  //       console.log("values-->", values);
+  //       dispatch(login(params));
+  //     } catch (err) {
+  //       console.error("Failed to login:", err.message);
+  //     } finally {
+  //       setSubmitting(false);
+  //     }
+  //   },
+  // });
+
+  // const formik = useFormik({
+  //   initialValues,
+  //   validationSchema: phoneOrEmailVal.concat(Yup.object({
+  //     password: Yup.string().required("Password is required"),
+  //   })),
+  //   onSubmit: async (values, { setSubmitting }) => {
+  //     const params = emailRegex.test(values.emailOrPhone)
+  //       ? { email: values.emailOrPhone }
+  //       : { phone: values.emailOrPhone };
+  //       // const data = { ...params, password: values.password };
+        
+  //     try {
+  //       dispatch(login({ ...params, password: values.password }));
+  //     } catch (err) {
+  //       console.error("Failed to login:", err.message);
+  //     } finally {
+  //       setSubmitting(false);
+  //     }
+  //   },
+  // });
+
   const formik = useFormik({
     initialValues,
-    validationSchema: LoginSchema,
-    onSubmit: async (values,{ setSubmitting }) => {
-      const params = {
-        email: values.email,
-        password: values.password,
-      };
-      try {
-        
-        console.log("values-->", values);
-        dispatch(login(params));
-      } catch (err) {
-        console.error("Failed to login:", err.message);
-      } finally {
-        setSubmitting(false);
-      }
+    validationSchema:LoginSchema,
+    onSubmit: async (values, { setSubmitting }) => {
+      await handleSubmission(values, setSubmitting, dispatch);
     },
   });
 
@@ -93,19 +131,19 @@ console.log("token22",token);
                   <input
                     style={{ borderBottom: "1px solid var(--mainTextGrey)" }}
                     className="w-full outline-none border-none pb-2"
-                    type="email"
+                    type="emailOrPhone"
                     placeholder="Email or phone number"
                     autoComplete="off"
-                    name="email"
-                    value={formik.values.email}
+                    name="emailOrPhone"
+                    value={formik.values.emailOrPhone}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     size="lg"
                     required
                   />
-                  {formik.errors.email && formik.touched.email && (
+                  {formik.errors.emailOrPhone && formik.touched.emailOrPhone && (
                     <Typography color="error" variant="body2">
-                      {formik.errors.email}
+                      {formik.errors.emailOrPhone}
                     </Typography>
                   )}
                 </div>
@@ -154,6 +192,11 @@ console.log("token22",token);
               )}
             </form>
           </div>
+          <div>
+                <div className="w-[400px] flex items-center justify-center mt-6 space-x-2">
+                  <p className="text-[14px]">Dont have an account ? <Link className="text-blue-800 font-medium" to={"/register"}>Sign Up</Link></p>
+                </div>
+              </div>
         </div>
       </div>
     </div>

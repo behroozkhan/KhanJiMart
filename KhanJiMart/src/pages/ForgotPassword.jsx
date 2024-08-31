@@ -7,26 +7,28 @@ import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import { checkingUserMailOrPhoneExist } from "../redux/redux-features/auth/AuthSlice";
 import * as Yup from 'yup';
+import { phoneOrEmailVal,emailRegex } from "../schemas/AuthValidations";
+
 
 const initialValues = {
-  email: "",
-  phone: "",
+  emailOrPhone: "", 
 };
 
-// Validation schema using Yup
-const validationSchema = Yup.object({
-  emailOrPhone: Yup.string()
-    .required("Email or phone number is required")
-    .test(
-      "is-email-or-phone",
-      "Please provide a valid email or phone number",
-      value => {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        const phoneRegex = /^[0-9]{10,15}$/;
-        return emailRegex.test(value) || phoneRegex.test(value);
-      }
-    )
-});
+
+const handleSubmission = async (values, setSubmitting, dispatch) => {
+  const params = emailRegex.test(values.emailOrPhone)
+    ? { email: values.emailOrPhone }
+    : { phone: values.emailOrPhone };
+
+  try {
+    await dispatch(checkingUserMailOrPhoneExist(params)).unwrap();
+  } catch (error) {
+    console.error("Failed to check email/phone:", error.message);
+  } finally {
+    setSubmitting(false);
+  }
+};
+
 
 const ForgotPassword = () => {
   const dispatch = useDispatch();
@@ -42,27 +44,37 @@ const ForgotPassword = () => {
     }
   }, [isSuccess, userId, navigate]);
 
+  // const formik = useFormik({
+  //   initialValues: { emailOrPhone: "" },
+  //   phoneOrEmail,
+  //   onSubmit: async (values, { setSubmitting }) => {
+  //     let params = {};
+  //     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  //     if (emailRegex.test(values.emailOrPhone)) {
+  //       params = { email: values.emailOrPhone };
+  //     } else {
+  //       params = { phone: values.emailOrPhone };
+  //     }
+  //     try {
+  //       dispatch(checkingUserMailOrPhoneExist(params));
+  //     } catch (err) {
+  //       console.error("Failed to check email/phone:", err.message);
+  //     } finally {
+  //       setSubmitting(false);
+  //     }
+  //   },
+  // });
+
+
   const formik = useFormik({
-    initialValues: { emailOrPhone: "" },
-    validationSchema,
+    initialValues,
+    phoneOrEmailVal,
     onSubmit: async (values, { setSubmitting }) => {
-      let params = {};
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (emailRegex.test(values.emailOrPhone)) {
-        params = { email: values.emailOrPhone };
-      } else {
-        params = { phone: values.emailOrPhone };
-      }
-      try {
-        dispatch(checkingUserMailOrPhoneExist(params));
-      } catch (err) {
-        console.error("Failed to check email/phone:", err.message);
-      } finally {
-        setSubmitting(false);
-      }
+      await handleSubmission(values, setSubmitting, dispatch);
     },
   });
 
+  
   return (
     <div>
       <div className="flex flex-wrap items-center mt-6">
