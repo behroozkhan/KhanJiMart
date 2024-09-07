@@ -10,6 +10,7 @@ import { register } from "../redux/redux-features/auth/AuthSlice";
 import { RegisterSchema, emailRegex } from "../schemas/AuthValidations";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { AxiosError } from "axios";
 
 const initialValues = {
   name: "",
@@ -35,7 +36,7 @@ const handleSubmission = async (values, setSubmitting, dispatch) => {
 
 const Register = () => {
   const dispatch = useDispatch();
-  const { isLoading, isError, isSuccess, errorMessage } = useSelector(
+  const { isLoading, isError, isSuccess } = useSelector(
     (state) => state.auth
   );
   const navigate = useNavigate();
@@ -46,9 +47,13 @@ const Register = () => {
       navigate("/login");
     }
     if (isError) {
-      toast.error(errorMessage || "Registration failed.");
+      const axiosError = new AxiosError()
+      const errorMessage = axiosError;
+      console.log("errorMessage ===>", errorMessage);
+
+      toast.error(errorMessage);
     }
-  }, [isSuccess, isError, errorMessage, navigate]);
+  }, [isSuccess, isError, navigate]);
 
   const formik = useFormik({
     initialValues,
@@ -56,6 +61,8 @@ const Register = () => {
     onSubmit: async (values, { setSubmitting }) => {
       try {
         await handleSubmission(values, setSubmitting, dispatch);
+        localStorage.setItem("user", JSON.stringify(values))
+        
         console.log("values-->", values);
       } catch (err) {
         console.error("Failed to login:", err.message);
@@ -98,7 +105,7 @@ const Register = () => {
                   style={{ borderBottom: "1px solid var(--mainTextGrey)" }}
                   className="w-full outline-none border-none pb-2"
                   type="text"
-                  placeholder="Name"
+                  placeholder="Name *"
                   name="name"
                   value={formik.values.name}
                   onChange={formik.handleChange}
@@ -121,7 +128,7 @@ const Register = () => {
                   className="w-full outline-none border-none pb-2"
                   type="emailOrPhone"
                   name="emailOrPhone"
-                  placeholder="Email or phone number"
+                  placeholder="Email or phone number *"
                   value={formik.values.emailOrPhone}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -143,7 +150,7 @@ const Register = () => {
                   className="w-full outline-none border-none pb-2"
                   type="password"
                   name="password"
-                  placeholder="Password"
+                  placeholder="Password *"
                   value={formik.values.password}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -191,14 +198,14 @@ const Register = () => {
                 </Button>
               </div>
             </div>
-          <div className="w-[300px] flex items-center mt-6 space-x-2">
-          <p className="text-[14px]">
-            Already have an account ? 
-            <Link className="text-blue-800 font-medium" to={"/login"}>
-              {" "}Sign In
-            </Link>
-          </p>
-        </div>
+            <div className="w-[300px] flex items-center mt-6 space-x-2">
+              <p className="text-[14px]">
+                Already have an account ?
+                <Link className="text-blue-800 font-medium" to={"/login"}>
+                  {" "}Sign In
+                </Link>
+              </p>
+            </div>
           </div>
         </form>
       </div>

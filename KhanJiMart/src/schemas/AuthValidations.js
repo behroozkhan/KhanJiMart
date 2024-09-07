@@ -30,7 +30,7 @@ const LoginSchema = Yup.object().shape({
     name: Yup.string()
         .min(3)
         .max(100)
-        .required("Name Is Feild")
+        .required("Name Is Required")
         ,
         emailOrPhone: Yup.string()
         .required("Email or phone number is required")

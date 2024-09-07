@@ -6,15 +6,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../redux/redux-features/auth/AuthSlice";
 import { LoadingButtonMui } from "../utils/button/LoadingButton";
-import { LoginSchema,emailRegex } from "../schemas/AuthValidations";
+import { LoginSchema, emailRegex } from "../schemas/AuthValidations";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FaAngleLeft } from "react-icons/fa6";
 
 
+const userDetails = localStorage.getItem("user");
+const parsedUserDetails = JSON.parse(userDetails)
+
 const initialValues = {
-  emailOrPhone: "",
-  password: "",
+  emailOrPhone: parsedUserDetails ? parsedUserDetails.emailOrPhone : "",
+  password: parsedUserDetails ? parsedUserDetails.password : "",
 };
 
 
@@ -35,21 +38,22 @@ const handleSubmission = async (values, setSubmitting, dispatch) => {
 
 const Login = () => {
   const dispatch = useDispatch();
-  const { token, isLoading, isError,isSuccess, errorMessage } = useSelector(
+  const { token, isLoading, isError, isSuccess, errorMessage } = useSelector(
     (state) => state.auth
   );
   const navigate = useNavigate();
-console.log("token22",token);
+
+
 
   useEffect(() => {
     if (token) {
       toast.success('You have successfully logged in.');
-        navigate("/");
+      navigate("/");
     }
     if (isError) {
       toast.error(errorMessage || "Login failed.");
     }
-  }, [isSuccess,token, navigate]);
+  }, [isSuccess, token, navigate]);
 
   // const formik = useFormik({
   //   initialValues,
@@ -60,7 +64,7 @@ console.log("token22",token);
   //       password: values.password,
   //     };
   //     try {
-        
+
   //       console.log("values-->", values);
   //       dispatch(login(params));
   //     } catch (err) {
@@ -81,7 +85,7 @@ console.log("token22",token);
   //       ? { email: values.emailOrPhone }
   //       : { phone: values.emailOrPhone };
   //       // const data = { ...params, password: values.password };
-        
+
   //     try {
   //       dispatch(login({ ...params, password: values.password }));
   //     } catch (err) {
@@ -94,17 +98,19 @@ console.log("token22",token);
 
   const formik = useFormik({
     initialValues,
-    validationSchema:LoginSchema,
+    validationSchema: LoginSchema,
     onSubmit: async (values, { setSubmitting }) => {
       await handleSubmission(values, setSubmitting, dispatch);
     },
   });
+console.log("parsed", parsedUserDetails);
+
 
   return (
     <div>
-       <div className=" absolute right-10 w-[25%] animate-popup">
-            <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} />
-       </div>
+      <div className=" absolute right-10 w-[25%] animate-popup">
+        <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} />
+      </div>
       <div className="flex flex-wrap items-center mt-6">
         <div className="mt-4 bg-red-400 flex flex-wrap">
           <img
@@ -193,10 +199,10 @@ console.log("token22",token);
             </form>
           </div>
           <div>
-                <div className="w-[400px] flex items-center justify-center mt-6 space-x-2">
-                  <p className="text-[14px]">Dont have an account ? <Link className="text-blue-800 font-medium" to={"/register"}>Sign Up</Link></p>
-                </div>
-              </div>
+            <div className="w-[400px] flex items-center justify-center mt-6 space-x-2">
+              <p className="text-[14px]">Dont have an account ? <Link className="text-blue-800 font-medium" to={"/register"}>Sign Up</Link></p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
